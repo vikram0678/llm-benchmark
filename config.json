@@ -1,0 +1,14 @@
+{
+  "models": [
+    "gpt2",
+    "facebook/opt-125m",
+    "distilbert/distilgpt2"
+  ],
+  "dataset_path": "datasets/sample_prompts.jsonl",
+  "output_dir": "outputs",
+  "max_new_tokens": 50,
+  "temperature": 0.7,
+  "device": "auto",
+  "warmup": true,
+  "min_quality_tokens": 5
+}
