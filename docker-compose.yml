@@ -1,0 +1,20 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      # Mount workspace for live editing and persisting outputs
+      - .:/app
+      # Cache downloaded Hugging Face models so they aren't redownloaded every run
+      - hf_cache:/root/.cache/huggingface
+    env_file:
+      - .env.example
+    environment:
+      - HF_HOME=/root/.cache/huggingface
+      - PYTHONUNBUFFERED=1
+    command: python src/cli.py --config config.yaml
+
+volumes:
+  hf_cache:
+    driver: local
