@@ -1,0 +1,26 @@
+model_name,prompt_id,latency_sec,throughput_tps,peak_ram_mb,peak_vram_mb,quality_ttr,token_count,is_degenerate,prompt_text,output_text
+gpt2,prompt_1,1.8767,26.64,1263.02,0.0,0.6512,50,False,Explain the concept of quantum computing in simple terms.,"Quantum computing is a new way to do things and one that is especially promising for the future of computing. Quantum computing is a powerful new way of doing things. It is an approach that is often used as part of the ""old-"
+gpt2,prompt_2,1.8791,26.61,1263.02,0.0,0.5854,50,False,Write a Python function to check if a string is a palindrome.,"You may wish to check the code under the root of your program.
+
+Running this code in the root of a program
+
+If you would like to run it in the root of a different program then you need to run"
+gpt2,prompt_3,1.8936,26.4,1263.06,0.0,0.7907,50,False,"If five machines take five minutes to make five widgets, how long do 100 machines take to make 100 widgets?","This is not really a question of speed; if you build a widget for a specific user, then it will take 100 times as long as the first one.
+
+So, you can choose between two sizes of widgets. The more sizes you can"
+facebook/opt-125m,prompt_1,2.0916,23.9,1260.39,0.0,0.7447,50,False,Explain the concept of quantum computing in simple terms.,"It's an artificial intelligence platform that can be used for deep learning and it's designed to be able to find and manipulate the quantum state of a single source of energy. It has one of the biggest and most powerful algorithms, but it's not"
+facebook/opt-125m,prompt_2,0.4879,20.5,1260.37,0.0,1.0,10,False,Write a Python function to check if a string is a palindrome.,Not sure I understand what you mean.
+facebook/opt-125m,prompt_3,1.9058,26.24,1260.37,0.0,0.5517,50,False,"If five machines take five minutes to make five widgets, how long do 100 machines take to make 100 widgets?","The answer is far from simple. We’ve all been there. We’ve all been there.
+
+We’ve all been there.
+
+A lot of us have been there.
+
+We’"
+distilbert/distilgpt2,prompt_1,1.3405,37.3,1174.71,0.0,0.825,50,False,Explain the concept of quantum computing in simple terms.,"The first step in that process is to create a system that can efficiently solve the problems that arise if people use it.
+
+
+
+Many quantum computers (such as quantum computers) have a ""hard-wired memory,"" where they can only be"
+distilbert/distilgpt2,prompt_2,1.2877,38.83,1174.71,0.0,0.0,50,True,Write a Python function to check if a string is a palindrome.,
+distilbert/distilgpt2,prompt_3,1.2502,39.99,1174.78,0.0,0.381,50,False,"If five machines take five minutes to make five widgets, how long do 100 machines take to make 100 widgets?","The first is to have the system run and update the widget whenever it needs to. The second, then, is to have the system run and update the widget whenever it needs to. The third, then, is to have the system run"
