@@ -1,0 +1,3 @@
+{"id": "prompt_1", "category": "general", "prompt": "Explain the concept of quantum computing in simple terms."}
+{"id": "prompt_2", "category": "coding", "prompt": "Write a Python function to check if a string is a palindrome."}
+{"id": "prompt_3", "category": "reasoning", "prompt": "If five machines take five minutes to make five widgets, how long do 100 machines take to make 100 widgets?"}
