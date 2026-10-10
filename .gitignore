@@ -9,7 +9,6 @@ __pycache__/
 
 # Local environment & secret tokens
 .env
-*.local
 
 # OS files
 .DS_Store
