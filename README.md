@@ -77,15 +77,36 @@ llm-benchmark/
 
 ---
 
-## 🛠️ Quickstart & Setup
+## 🛠️ Quickstart & Execution
 
-### 1. Local Setup (Virtual Environment)
+### 1. Docker Execution (Recommended)
 
-```powershell
+The easiest, zero-configuration way to run the entire benchmark pipeline in an isolated, reproducible container:
+
+```bash
 # Clone the repository
 git clone https://github.com/vikram0678/llm-benchmark.git
 cd llm-benchmark
 
+# Build and execute the full benchmark suite
+docker-compose run --rm app python src/cli.py --config config.yaml
+```
+
+> **Why Docker is recommended:** It isolates PyTorch, Transformers, and CUDA drivers from your host operating system and caches downloaded Hugging Face model weights inside a persistent named volume (`hf_cache`).
+
+You can also launch via standard compose:
+```bash
+docker-compose up --build
+```
+
+---
+
+### 2. Local Python Setup (Alternative)
+
+If you prefer running directly on your host machine using Python 3.10+:
+
+#### Environment Setup
+```powershell
 # Create and activate virtual environment
 python -m venv .venv
 .\.venv\Scripts\activate   # On Windows
@@ -95,27 +116,22 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-### 2. Environment Variables
-
-Copy the template:
+#### Environment Variables
+Copy the template to configure local caches or private tokens:
 ```bash
 cp .env.example .env
 ```
 Key variables:
-- `HF_HOME`: Directory to cache downloaded model weights (defaults to local `.cache`).
-- `HF_TOKEN`: Hugging Face user token (required only for gated models).
+- `HF_HOME`: Directory to cache downloaded model weights (defaults to `./.cache/huggingface`).
+- `HF_TOKEN`: Hugging Face user access token (optional, needed only for gated models).
 
----
-
-## 💻 Running the Benchmark
-
-### Validate Configuration (Dry Run)
-Verify models, parameters, and dataset accessibility without downloading weights:
+#### Running the CLI
+Validate configuration and dataset path without downloading weights:
 ```bash
 python src/cli.py --config config.yaml --dry-run
 ```
 
-### Execute Full Benchmark
+Execute the full benchmark:
 ```bash
 python src/cli.py --config config.yaml
 ```
@@ -127,36 +143,20 @@ python src/cli.py --config config.json
 
 ---
 
-## 🐳 Docker Execution
-
-Run the entire pipeline in an isolated container with cached model volumes:
-
-```bash
-# Build and run via docker-compose
-docker-compose up --build
-```
-
-Or run standalone using Docker:
-```bash
-docker build -t llm-benchmark .
-docker run --rm -v ${PWD}/outputs:/app/outputs llm-benchmark
-```
-
----
-
 ## 📊 Benchmark Findings & Analysis
 
 During our standardized benchmark run on 3 diverse prompts, the following results were recorded:
 
 ### Summary Table
 
-| Model | Avg Latency | Throughput | Peak RAM | Peak VRAM | Lexical TTR | Degenerate % | Coherence Status |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **`distilbert/distilgpt2`** | **2.007 s** | **15.31 TPS** | 1073.9 MB | 0.0 MB | 0.000 | 100.0% | ❌ Degenerate / Empty |
-| **`facebook/opt-125m`** | 4.910 s | 10.19 TPS | 915.0 MB | 0.0 MB | **0.589** | **0.0%** | ✅ Coherent & Varied |
-| **`gpt2`** | 5.219 s | 9.63 TPS | **870.0 MB** | 0.0 MB | 0.554 | **0.0%** | ✅ Coherent & Accurate |
+| Model                               | Avg Latency       | Throughput          | Peak RAM           | Peak VRAM | Lexical TTR     | Degenerate %   | Coherence Status       |
+| :---------------------------------- | :---------------- | :------------------ | :----------------- | :-------- | :-------------- | :------------- | :--------------------- |
+| **`distilbert/distilgpt2`** | **2.007 s** | **15.31 TPS** | 1073.9 MB          | 0.0 MB    | 0.000           | 100.0%         | ❌ Degenerate / Empty  |
+| **`facebook/opt-125m`**     | 4.910 s           | 10.19 TPS           | 915.0 MB           | 0.0 MB    | **0.589** | **0.0%** | ✅ Coherent & Varied   |
+| **`gpt2`**                  | 5.219 s           | 9.63 TPS            | **870.0 MB** | 0.0 MB    | 0.554           | **0.0%** | ✅ Coherent & Accurate |
 
 ### Key Takeaways:
+
 1. **Speed vs. Coherence Trade-off**: `distilgpt2` exhibited the highest raw generation throughput (15.31 TPS) and lowest latency (2.00s). However, its Type-Token Ratio was 0.0 and it was flagged as 100% degenerate. This proves why quality metrics are essential in LLM benchmarking.
 2. **Opt-125m vs. GPT-2**: `facebook/opt-125m` offered a ~6% higher throughput (10.19 TPS vs 9.63 TPS) and higher lexical diversity (0.589 vs 0.554) compared to `gpt2`, while requiring only ~45 MB additional peak RAM.
 3. **Resource Isolation**: Explicit memory purges (`gc.collect()` and `cuda.empty_cache()`) prevented memory leaks across consecutive model evaluations.
